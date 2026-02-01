@@ -8,6 +8,9 @@ group = "moth.boxxed"
 version = "0.1.0"
 val javaVersion = 25
 
+val appData = System.getenv("APPDATA") ?: (System.getenv("HOME") + "/.var/app/com.hypixel.HytaleLauncher/data")
+val hytaleAssets = file("$appData/Hytale/install/release/package/game/latest/Assets.zip")
+
 repositories {
     mavenCentral()
     maven("https://maven.hytale-modding.info/releases") {
@@ -24,6 +27,13 @@ dependencies {
 
     testCompileOnly("org.projectlombok:lombok:1.18.42")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
+
+    if (hytaleAssets.exists()) {
+        compileOnly(files(hytaleAssets))
+    } else {
+        // Optional: Print a warning so you know why it's missing
+        logger.warn("Hytale Assets.zip not found at: ${hytaleAssets.absolutePath}")
+    }
 }
 
 hytale {

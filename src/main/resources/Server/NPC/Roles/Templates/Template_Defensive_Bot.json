@@ -1,0 +1,130 @@
+{
+  "Debug": "DisplayState",
+  "Type": "Abstract",
+  "Parameters": {
+    "Appearance": {
+      "Value": "Bear_Grizzly",
+      "Description": "Model to be used"
+    },
+    "DropList": {
+      "Value": "Empty",
+      "Description": "Drop Items"
+    },
+    "MaxHealth": {
+      "Value": 100,
+      "Description": "Max health for the NPC"
+    },
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.TemplateDefensiveBot.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "Appearance": { "Compute": "Appearance" },
+  "DropList": { "Compute": "DropList" },
+  "MaxHealth": { "Compute": "MaxHealth" },
+  "StartState": "Idle",
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 3,
+      "Gravity": 10,
+      "MaxFallSpeed": 8,
+      "Acceleration": 10
+    }
+  ],
+  "Instructions": [
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Idle"
+      },
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": ".Default"
+          },
+          "Instructions": [
+            {
+              "Actions": [
+                {
+                  "Type": "Random",
+                  "Actions": [
+                    {
+                      "Weight": 90,
+                      "Action": {
+                        "Type": "State",
+                        "State": ".Guard"
+                      }
+                    },
+                    {
+                      "Weight": 10,
+                      "Action": {
+                        "Type": "State",
+                        "State": ".Hibernation"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": ".Hibernation"
+          },
+          "Instructions": [
+            {
+              "Continue": true,
+              "ActionsBlocking": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [15, 30]
+                },
+                {
+                  "Type": "State",
+                  "State": ".Default"
+                }
+              ],
+              "Reference": "Component_Instruction_Intelligent_Idle_Motion_Follow_Path"
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": ".Guard"
+          },
+          "Instructions": [
+            {
+              "Continue": true,
+              "ActionsBlocking": true,
+              "Actions": [
+                {
+                  "Type": "Timeout",
+                  "Delay": [15, 30]
+                },
+                {
+                  "Type": "State",
+                  "State": ".Default"
+                }
+              ],
+              "Reference": "Component_Instruction_Intelligent_Idle_Motion_Follow_Path"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Sensor": {
+        "Type": "State",
+        "State": "Dead"
+      },
+      "Instructions": []
+    }
+  ],
+  "NameTranslationKey": { "Compute": "NameTranslationKey" }
+}
