@@ -9,6 +9,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 import lombok.Getter;
+import moth.boxxed.slainmecha.components.block.BotRelicBlock;
 import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
 import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
 import moth.boxxed.slainmecha.components.entity.SorterBotComponent;
@@ -24,7 +25,7 @@ public class SlainMecha extends JavaPlugin {
     @Getter private final ComponentType<EntityStore, DefensiveBotComponent> defensiveBotComponentType;
 
     @Getter private final ComponentType<ChunkStore, MechanicalHeartBlock> mechanicalHeartComponentType;
-    //@Getter private final ComponentType<ChunkStore, BotRelicBlock> botRelicBlockComponentType;
+    @Getter private final ComponentType<ChunkStore, BotRelicBlock> botRelicBlockComponentType;
 
     public static SlainMecha get() {
         return instance;
@@ -38,7 +39,7 @@ public class SlainMecha extends JavaPlugin {
         this.defensiveBotComponentType = this.getEntityStoreRegistry().registerComponent(DefensiveBotComponent.class, "DefensiveBot", DefensiveBotComponent.CODEC);
 
         this.mechanicalHeartComponentType = this.getChunkStoreRegistry().registerComponent(MechanicalHeartBlock.class, "MechanicalHeart", MechanicalHeartBlock.CODEC);
-        //this.botRelicBlockComponentType = this.getChunkStoreRegistry().registerComponent(BotRelicBlock.class, "BotRelic", BotRelicBlock.CODEC);
+        this.botRelicBlockComponentType = this.getChunkStoreRegistry().registerComponent(BotRelicBlock.class, "BotRelic", BotRelicBlock.CODEC);
 
         this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.BreakBlockEventSystem());
         this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.PlaceBlockEventSystem());
