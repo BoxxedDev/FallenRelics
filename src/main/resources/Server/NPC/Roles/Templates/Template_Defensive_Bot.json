@@ -117,13 +117,6 @@
           ]
         }
       ]
-    },
-    {
-      "Sensor": {
-        "Type": "State",
-        "State": "Dead"
-      },
-      "Instructions": []
     }
   ],
   "NameTranslationKey": { "Compute": "NameTranslationKey" }

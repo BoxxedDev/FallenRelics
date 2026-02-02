@@ -2,6 +2,7 @@ package moth.boxxed.slainmecha.interaction;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3f;
@@ -15,9 +16,11 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHa
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockComponentChunk;
+import com.hypixel.hytale.server.core.universe.world.npc.INonPlayerCharacter;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
+import it.unimi.dsi.fastutil.Pair;
 import moth.boxxed.slainmecha.SlainMecha;
 import moth.boxxed.slainmecha.components.block.BotRelicBlock;
 import org.jspecify.annotations.NonNull;
@@ -61,8 +64,8 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         world.sendMessage(Message.raw("Put Mechanical Heart In"));
 
         world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
-        world.execute(() -> {
-            NPCPlugin.get().spawnNPC(
+        cmd.run(_store -> {
+            Pair<Ref<EntityStore>, INonPlayerCharacter> refPair = NPCPlugin.get().spawnNPC(
                     world.getEntityStore().getStore(),
                     block.getRelicEntity(),
                     null,
