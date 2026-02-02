@@ -51,6 +51,15 @@
           "RelicType": "DefensiveBot"
         }
       }
+    },
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "PutHeartInRelic"
+          }
+        ]
+      }
     }
   },
   "ResourceTypes": [

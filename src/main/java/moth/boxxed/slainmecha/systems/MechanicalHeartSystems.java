@@ -106,16 +106,13 @@ public class MechanicalHeartSystems {
         ) {
             ItemStack stack = event.getItemInHand();
             if (stack == null) return;
-            store.getExternalData().getWorld().sendMessage(Message.raw(String.valueOf(stack.getFromMetadataOrNull(new KeyedCodec<>("Essence", Codec.INTEGER)))));
 
             Store<ChunkStore> chunkStore = store.getExternalData().getWorld().getChunkStore().getStore();
             Vector3i target = event.getTargetBlock();
-            store.getExternalData().getWorld().sendMessage(Message.raw("Place Heart"));
             long chunkIndex = ChunkUtil.indexChunkFromBlock(target.getX(), target.getZ());
             BlockComponentChunk blockComponentChunk = chunkStore.getExternalData().getChunkComponent(chunkIndex, BlockComponentChunk.getComponentType());
             if (blockComponentChunk == null) return;
             int blockIndex = ChunkUtil.indexBlockInColumn(target.getX(), target.getY(), target.getZ());
-            store.getExternalData().getWorld().sendMessage(Message.raw(String.valueOf(blockIndex)));
             MechanicalHeartBlock heart = blockComponentChunk.getComponent(blockIndex, SlainMecha.get().getMechanicalHeartComponentType());
             if (heart == null) return;
 

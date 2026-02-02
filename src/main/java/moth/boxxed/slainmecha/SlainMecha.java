@@ -14,6 +14,7 @@ import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
 import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
 import moth.boxxed.slainmecha.components.entity.SorterBotComponent;
 import moth.boxxed.slainmecha.interaction.PutEssenceInHeartInteraction;
+import moth.boxxed.slainmecha.interaction.PutHeartInRelicInteraction;
 import moth.boxxed.slainmecha.systems.MechanicalHeartSystems;
 
 public class SlainMecha extends JavaPlugin {
@@ -45,7 +46,7 @@ public class SlainMecha extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.PlaceBlockEventSystem());
 
         this.getCodecRegistry(Interaction.CODEC).register("PutEssenceInHeart", PutEssenceInHeartInteraction.class, PutEssenceInHeartInteraction.CODEC);
-        //this.getCodecRegistry(Interaction.CODEC).register("PutHeartInRelic", PutHeartInBotInteraction.class, PutHeartInBotInteraction.CODEC);
+        this.getCodecRegistry(Interaction.CODEC).register("PutHeartInRelic", PutHeartInRelicInteraction.class, PutHeartInRelicInteraction.CODEC);
     }
 
     @Override
