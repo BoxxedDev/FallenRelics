@@ -15,8 +15,6 @@ import moth.boxxed.slainmecha.components.entity.SorterBotComponent;
 import moth.boxxed.slainmecha.interaction.PutEssenceInHeartInteraction;
 import moth.boxxed.slainmecha.systems.MechanicalHeartSystems;
 
-import java.io.ObjectInputFilter;
-
 public class SlainMecha extends JavaPlugin {
     private static SlainMecha instance;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
@@ -26,6 +24,7 @@ public class SlainMecha extends JavaPlugin {
     @Getter private final ComponentType<EntityStore, DefensiveBotComponent> defensiveBotComponentType;
 
     @Getter private final ComponentType<ChunkStore, MechanicalHeartBlock> mechanicalHeartComponentType;
+    //@Getter private final ComponentType<ChunkStore, BotRelicBlock> botRelicBlockComponentType;
 
     public static SlainMecha get() {
         return instance;
@@ -39,11 +38,13 @@ public class SlainMecha extends JavaPlugin {
         this.defensiveBotComponentType = this.getEntityStoreRegistry().registerComponent(DefensiveBotComponent.class, "DefensiveBot", DefensiveBotComponent.CODEC);
 
         this.mechanicalHeartComponentType = this.getChunkStoreRegistry().registerComponent(MechanicalHeartBlock.class, "MechanicalHeart", MechanicalHeartBlock.CODEC);
+        //this.botRelicBlockComponentType = this.getChunkStoreRegistry().registerComponent(BotRelicBlock.class, "BotRelic", BotRelicBlock.CODEC);
 
-        this.getChunkStoreRegistry().registerSystem(new MechanicalHeartSystems.BreakBlockEventSystem());
-        this.getChunkStoreRegistry().registerSystem(new MechanicalHeartSystems.PlaceBlockEventSystem());
+        this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.BreakBlockEventSystem());
+        this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.PlaceBlockEventSystem());
 
         this.getCodecRegistry(Interaction.CODEC).register("PutEssenceInHeart", PutEssenceInHeartInteraction.class, PutEssenceInHeartInteraction.CODEC);
+        //this.getCodecRegistry(Interaction.CODEC).register("PutHeartInRelic", PutHeartInBotInteraction.class, PutHeartInBotInteraction.CODEC);
     }
 
     @Override

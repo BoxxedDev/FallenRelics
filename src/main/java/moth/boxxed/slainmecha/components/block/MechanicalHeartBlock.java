@@ -36,8 +36,8 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
                     .add()
                     .build();
 
-    @Getter @Setter private int essence;
-    @Getter @Setter private List<ItemStack> remainderEssence;
+    @Getter @Setter private int essence = 0;
+    @Getter @Setter private List<ItemStack> remainderEssence = new ArrayList<>();
 
     public MechanicalHeartBlock() {}
 
@@ -47,7 +47,6 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
     }
 
     public void addEssence(ItemStack stack) {
-        ItemStack remainderStack = ItemStack.EMPTY;
         if (!(stack.getItemId().equals("Ingredient_Life_Essence") || stack.getItemId().equals("Ingredient_Life_Essence_Concentrated"))) return;
 
         SlainMechaConfig config = SlainMecha.get().getConfig().get();
@@ -59,15 +58,18 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
 
         int before = stack.getQuantity()*mult*essenceConversionMult + this.essence;
 
-        if (before > maxEssence) {
-            int remainder = before - maxEssence;
-
-            int stackAmount = Math.floorDiv(remainder, 100);
-            for (int i=0; i<stackAmount; i++) {
-                this.remainderEssence.add(new ItemStack("Ingredient_Lift_Essence", 100));
-            }
-            this.remainderEssence.add(new ItemStack("Ingredient_Lift_Essence", remainder - (stackAmount*100)));
-        }
+//        if (before > maxEssence) {
+//            int remainder = before - maxEssence;
+//
+//            int stackAmount = Math.floorDiv(remainder, 100);
+//            for (int i=0; i<stackAmount; i++) {
+//                this.remainderEssence.add(new ItemStack("Ingredient_Life_Essence", 100));
+//            }
+//            if (remainder - (stackAmount*100) > 0) {
+//                this.remainderEssence.add(new ItemStack("Ingredient_Life_Essence", remainder - (stackAmount*100)));
+//            }
+//        }
+        this.essence = Math.max(Math.min(before, maxEssence), 0);
     }
 
     @Override

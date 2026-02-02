@@ -1,11 +1,14 @@
 package moth.boxxed.slainmecha.interaction;
 
+import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
+import com.hypixel.hytale.protocol.WaitForDataFrom;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
@@ -19,7 +22,19 @@ import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+
 public class PutEssenceInHeartInteraction extends SimpleBlockInteraction {
+    @Nonnull
+    public static final BuilderCodec<PutEssenceInHeartInteraction> CODEC =
+            BuilderCodec.builder(PutEssenceInHeartInteraction.class, PutEssenceInHeartInteraction::new, SimpleBlockInteraction.CODEC)
+                    .build();
+
+    @Nonnull
+    public WaitForDataFrom getWaitForDataFrom() {
+        return WaitForDataFrom.Client;
+    }
+
     @Override
     protected void interactWithBlock(@NonNull World world, @NonNull CommandBuffer<EntityStore> cmd,
                                      @NonNull InteractionType interactionType, @NonNull InteractionContext interactionCtx,
@@ -36,6 +51,8 @@ public class PutEssenceInHeartInteraction extends SimpleBlockInteraction {
         MechanicalHeartBlock heart = blockComponentChunk.getComponent(blockIndex, SlainMecha.get().getMechanicalHeartComponentType());
         if (heart == null) return;
         heart.addEssence(stack);
+
+        world.sendMessage(Message.raw(String.valueOf(heart.getEssence())));
     }
 
     @Override

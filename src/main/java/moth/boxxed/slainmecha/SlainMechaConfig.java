@@ -18,9 +18,9 @@ public class SlainMechaConfig {
                     .addValidator(Validators.greaterThanOrEqual(1))
                     .add()
                     .append(
-                            new KeyedCodec<>("EssenceConversion", Codec.INTEGER),
-                            (o, i) -> o.essenceConversion = i,
-                            (o) -> o.essenceConversion
+                            new KeyedCodec<>("MaximumHeartEssence", Codec.INTEGER),
+                            (o, i) -> o.heartMaximumEssence = i,
+                            (o) -> o.heartMaximumEssence
                     )
                     .addValidator(Validators.greaterThanOrEqual(100))
                     .add()
