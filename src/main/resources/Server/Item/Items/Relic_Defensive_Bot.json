@@ -4,7 +4,7 @@
     "Description": "server.items.Relic_Defensive_Bot.description"
   },
   "ItemLevel": 10,
-  "MaxStack": 100,
+  "MaxStack": 1,
   "Icon": "Icons/ItemsGenerated/Rock_Stone.png",
   "Categories": [
     "Blocks.Rocks"
@@ -13,7 +13,7 @@
   "Set": "Rock_Stone",
   "BlockType": {
     "Material": "Solid",
-    "DrawType": "Cube",
+    "DrawType": "Model",
     "Group": "Stone",
     "Flags": {},
     "Gathering": {
@@ -60,7 +60,16 @@
           }
         ]
       }
-    }
+    },
+    "CustomModel": "Blocks/Defensive_Bot/Relic_Defensive_Bot.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Defensive_Bot/Relic_Defensive_Bot.png"
+      }
+    ],
+    "HitboxType": "Relic_Defensive_Bot",
+    "InteractionHitboxType": "Relic_Defensive_Bot",
+    "VariantRotation": "NESW"
   },
   "ResourceTypes": [
     {

@@ -10,6 +10,7 @@ import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.WaitForDataFrom;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.RotationTuple;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
@@ -49,7 +50,6 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
             @NonNull Vector3i target,
             @NonNull CooldownHandler cooldownHandler) {
         if (stack == null) return;
-        world.sendMessage(Message.raw(stack.getItemId()));
         if (!stack.getItemId().equals("Mechanical_Heart")) return;
 
         Store<ChunkStore> store = world.getChunkStore().getStore();
@@ -61,17 +61,19 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         BotRelicBlock block = blockComponentChunk.getComponent(blockIndex, SlainMecha.get().getBotRelicBlockComponentType());
         if (block == null) return;
 
-        world.sendMessage(Message.raw("Put Mechanical Heart In"));
-
-        world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
-        cmd.run(_store -> {
+        world.execute(() -> {
+            RotationTuple tuple = RotationTuple.get(world.getBlockRotationIndex(target.getX(), target.getY(), target.getZ()));
             Pair<Ref<EntityStore>, INonPlayerCharacter> refPair = NPCPlugin.get().spawnNPC(
                     world.getEntityStore().getStore(),
                     block.getRelicEntity(),
                     null,
                     target.clone().toVector3d().add(0.5, 0.5, 0.5),
-                    Vector3f.ZERO
+                    new Vector3f(0, .25f, 0)
             );
+
+
+            if (refPair == null) return;
+            world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
         });
     }
 

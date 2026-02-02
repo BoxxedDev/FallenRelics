@@ -27,9 +27,14 @@ public class BotRelicBlock implements Component<ChunkStore> {
     public BotRelicBlock() {
     }
 
+    public BotRelicBlock(String relicEntity, RelicType type) {
+        this.relicEntity =relicEntity;
+        this.relicType = type;
+    }
+
     @Override
     public @Nullable Component<ChunkStore> clone() {
-        return new BotRelicBlock();
+        return new BotRelicBlock(this.relicEntity, this.relicType);
     }
 
     public enum RelicType {
