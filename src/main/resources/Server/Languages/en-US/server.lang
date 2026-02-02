@@ -1,0 +1,8 @@
+items.Mechanical_Heart.name=Mechanical Heart
+items.Mechanical_Heart.description=A relic that beats to the rhythm of the essence of life.
+items.Relic_Defensive_Bot.name=Defensive Bot Relic
+items.Relic_Defensive_Bot.description=A relic meant to defend an ancient civilization.
+
+npcRoles.DefensiveBot.name=Defensive Bot
+
+general.qualities.Relic=Relic

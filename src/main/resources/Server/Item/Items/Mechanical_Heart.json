@@ -1,0 +1,79 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Mechanical_Heart.name",
+    "Description": "server.items.Mechanical_Heart.description"
+  },
+  "ItemLevel": 10,
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/Rock_Stone.png",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Set": "Rock_Stone",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "Stone",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "Mechanical_Heart"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "Textures": [
+      {
+        "All": "BlockTextures/Rock_Stone.png",
+        "Weight": 2
+      },
+      {
+        "All": "BlockTextures/Rock_Stone_2.png",
+        "Weight": 1
+      },
+      {
+        "All": "BlockTextures/Rock_Stone_3.png",
+        "Weight": 1
+      }
+    ],
+    "ParticleColor": "#737055",
+    "BlockSoundSetId": "Stone",
+    "Aliases": [
+      "stone",
+      "stone00"
+    ],
+    "BlockBreakingDecalId": "Breaking_Decals_Rock",
+    "BlockEntity": {
+      "Components": {
+        "MechanicalHeart": {
+          "Essence": 0
+        }
+      }
+    },
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "PutEssenceInHeart"
+          }
+        ]
+      }
+    }
+  },
+  "ResourceTypes": [
+    {
+      "Id": "Rock"
+    },
+    {
+      "Id": "Rock_Stone"
+    }
+  ],
+  "Tags": {
+    "Type": [
+      "Rock"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Quality": "Relic"
+}

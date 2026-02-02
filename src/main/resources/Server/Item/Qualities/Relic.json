@@ -1,0 +1,15 @@
+{
+  "QualityValue": 4,
+  "ItemTooltipTexture": "UI/ItemQualities/Tooltips/ItemTooltipRelic.png",
+  "ItemTooltipArrowTexture": "UI/ItemQualities/Tooltips/ItemTooltipRelicArrow.png",
+  "SlotTexture": "UI/ItemQualities/Slots/SlotRelic.png",
+  "BlockSlotTexture": "UI/ItemQualities/Slots/SlotRelic.png",
+  "SpecialSlotTexture": "UI/ItemQualities/Slots/SlotRelic.png",
+  "TextColor": "#40A759",
+  "LocalizationKey": "server.general.qualities.Relic",
+  "VisibleQualityLabel": true,
+  "RenderSpecialSlot": true,
+  "ItemEntityConfig": {
+    "ParticleSystemId": "Drop_Epic"
+  }
+}
