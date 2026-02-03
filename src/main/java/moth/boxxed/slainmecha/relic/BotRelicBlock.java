@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.components.block;
+package moth.boxxed.slainmecha.relic;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -6,7 +6,6 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.EnumCodec;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.server.core.codec.PairCodec;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.Getter;
@@ -16,7 +15,6 @@ import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
 import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
-import java.util.function.Function;
 
 public class BotRelicBlock implements Component<ChunkStore> {
     public static final BuilderCodec<BotRelicBlock> CODEC =
@@ -32,7 +30,7 @@ public class BotRelicBlock implements Component<ChunkStore> {
     }
 
     public BotRelicBlock(String relicEntity, RelicType type) {
-        this.relicEntity =relicEntity;
+        this.relicEntity = relicEntity;
         this.relicType = type;
     }
 
@@ -43,21 +41,23 @@ public class BotRelicBlock implements Component<ChunkStore> {
 
     @Getter
     public enum RelicType {
-        EMPTY(null, null),
+        EMPTY(null, null, null),
         DEFENSIVE_BOT(
+                DefensiveBotComponent.class,
                 SlainMecha.get().getDefensiveBotComponentType(),
                 (playerRef, store, blockPosition) -> {
                     UUID playerUUID = playerRef.getWorldUuid();
                     return new DefensiveBotComponent(playerUUID, blockPosition, false);
                 }
-                );
+        );
 
+        private final Class<? extends Component<EntityStore>> clazz;
         private final ComponentType<EntityStore, ? extends Component<EntityStore>> componentType;
-        private final IBotRelicComponentCreator<Component<EntityStore>> componentCreator;
-        RelicType(ComponentType<EntityStore, ? extends Component<EntityStore>> componentType, IBotRelicComponentCreator<Component<EntityStore>> componentCreator) {
+        private final IBotRelicComponentCreator<? extends Component<EntityStore>> componentCreator;
+        RelicType(Class<? extends Component<EntityStore>> clazz, ComponentType<EntityStore, ? extends Component<EntityStore>> componentType, IBotRelicComponentCreator<? extends Component<EntityStore>> componentCreator) {
+            this.clazz = clazz;
             this.componentType = componentType;
             this.componentCreator = componentCreator;
         }
-
     }
 }

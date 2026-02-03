@@ -1,18 +1,12 @@
 package moth.boxxed.slainmecha.interaction;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Component;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.WaitForDataFrom;
-import com.hypixel.hytale.server.core.Message;
-import com.hypixel.hytale.server.core.asset.type.blocktype.config.RotationTuple;
-import com.hypixel.hytale.server.core.entity.Entity;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
@@ -26,14 +20,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import it.unimi.dsi.fastutil.Pair;
 import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.components.block.BotRelicBlock;
-import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
+import moth.boxxed.slainmecha.relic.BotRelicBlock;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
     @Nonnull
@@ -66,13 +57,13 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         if (blockComponentChunk == null) return;
         int blockIndex = ChunkUtil.indexBlockInColumn(target.getX(), target.getY(), target.getZ());
 
-        BotRelicBlock block = blockComponentChunk.getComponent(blockIndex, SlainMecha.get().getBotRelicBlockComponentType());
-        if (block == null) return;
+        BotRelicBlock relic = blockComponentChunk.getComponent(blockIndex, SlainMecha.get().getBotRelicBlockComponentType());
+        if (relic == null) return;
 
         world.execute(() -> {
             Pair<Ref<EntityStore>, INonPlayerCharacter> refPair = NPCPlugin.get().spawnNPC(
                     world.getEntityStore().getStore(),
-                    block.getRelicEntity(),
+                    relic.getRelicEntity(),
                     null,
                     target.clone().toVector3d().add(0.5, 5.5, 0.5),
                     new Vector3f(0, .25f, 0)
@@ -82,10 +73,15 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
 
             Ref<EntityStore> ref = refPair.first();
             //TODO: Make flexible
+
+            Class<ComponentType> clazz = ComponentType.class;
+
+            if (relic.getRelicType().equals(BotRelicBlock.RelicType.EMPTY)) return;
+
             cmd.getStore().putComponent(
                     ref,
-                    SlainMecha.get().getDefensiveBotComponentType(),
-                    new DefensiveBotComponent(playerRef.getWorldUuid(), target, false)
+                    clazz.cast(relic.getRelicType().getComponentType()),
+                    relic.getRelicType().getComponentCreator().operate(playerRef, world.getEntityStore().getStore(), target)
             );
             world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
         });

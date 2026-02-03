@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.components.block;
+package moth.boxxed.slainmecha.relic;
 
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.Store;
@@ -8,5 +8,5 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 @FunctionalInterface
 public interface IBotRelicComponentCreator<T extends Component<EntityStore>> {
-    Component<EntityStore> operate(PlayerRef playerRef, Store<EntityStore> store, Vector3i blockPosition);
+    T operate(PlayerRef playerRef, Store<EntityStore> store, Vector3i blockPosition);
 }

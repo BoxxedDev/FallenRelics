@@ -12,12 +12,13 @@ import com.hypixel.hytale.server.core.util.Config;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import lombok.Getter;
 import moth.boxxed.slainmecha.NPC.builders.BuilderActionOpenDefensiveBot;
-import moth.boxxed.slainmecha.components.block.BotRelicBlock;
+import moth.boxxed.slainmecha.relic.BotRelicBlock;
 import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
 import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
 import moth.boxxed.slainmecha.interaction.PutEssenceInHeartInteraction;
 import moth.boxxed.slainmecha.interaction.PutHeartInRelicInteraction;
 import moth.boxxed.slainmecha.resources.MechanicalHeartPlaceMap;
+import moth.boxxed.slainmecha.systems.DefensiveBotSystem;
 import moth.boxxed.slainmecha.systems.MechanicalHeartSystems;
 
 public class SlainMecha extends JavaPlugin {
@@ -46,6 +47,8 @@ public class SlainMecha extends JavaPlugin {
         this.botRelicBlockComponentType = this.getChunkStoreRegistry().registerComponent(BotRelicBlock.class, "BotRelic", BotRelicBlock.CODEC);
 
         this.heartPlaceMapResourceType = this.getChunkStoreRegistry().registerResource(MechanicalHeartPlaceMap.class, "MechanicalHeartPlaceMap", MechanicalHeartPlaceMap.CODEC);
+
+        this.getEntityStoreRegistry().registerSystem(new DefensiveBotSystem());
 
         this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.BreakBlockEventSystem());
         this.getEntityStoreRegistry().registerSystem(new MechanicalHeartSystems.PlaceBlockEventSystem());
