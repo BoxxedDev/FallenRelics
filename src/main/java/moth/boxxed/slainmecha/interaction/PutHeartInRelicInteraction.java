@@ -2,6 +2,7 @@ package moth.boxxed.slainmecha.interaction;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.util.ChunkUtil;
@@ -11,10 +12,12 @@ import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.WaitForDataFrom;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.RotationTuple;
+import com.hypixel.hytale.server.core.entity.Entity;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockComponentChunk;
 import com.hypixel.hytale.server.core.universe.world.npc.INonPlayerCharacter;
@@ -24,10 +27,13 @@ import com.hypixel.hytale.server.npc.NPCPlugin;
 import it.unimi.dsi.fastutil.Pair;
 import moth.boxxed.slainmecha.SlainMecha;
 import moth.boxxed.slainmecha.components.block.BotRelicBlock;
+import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
     @Nonnull
@@ -49,6 +55,8 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
             @Nullable ItemStack stack,
             @NonNull Vector3i target,
             @NonNull CooldownHandler cooldownHandler) {
+        PlayerRef playerRef = cmd.getComponent(context.getEntity(), PlayerRef.getComponentType());
+        if (playerRef == null) return;
         if (stack == null) return;
         if (!stack.getItemId().equals("Mechanical_Heart")) return;
 
@@ -62,17 +70,23 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         if (block == null) return;
 
         world.execute(() -> {
-            RotationTuple tuple = RotationTuple.get(world.getBlockRotationIndex(target.getX(), target.getY(), target.getZ()));
             Pair<Ref<EntityStore>, INonPlayerCharacter> refPair = NPCPlugin.get().spawnNPC(
                     world.getEntityStore().getStore(),
                     block.getRelicEntity(),
                     null,
-                    target.clone().toVector3d().add(0.5, 0.5, 0.5),
+                    target.clone().toVector3d().add(0.5, 5.5, 0.5),
                     new Vector3f(0, .25f, 0)
             );
 
-
             if (refPair == null) return;
+
+            Ref<EntityStore> ref = refPair.first();
+            //TODO: Make flexible
+            cmd.getStore().putComponent(
+                    ref,
+                    SlainMecha.get().getDefensiveBotComponentType(),
+                    new DefensiveBotComponent(playerRef.getWorldUuid(), target, false)
+            );
             world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
         });
     }

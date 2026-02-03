@@ -12,7 +12,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.Getter;
 import lombok.Setter;
 import moth.boxxed.slainmecha.SlainMecha;
+import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
 import org.jspecify.annotations.Nullable;
+
+import java.util.UUID;
+import java.util.function.Function;
 
 public class BotRelicBlock implements Component<ChunkStore> {
     public static final BuilderCodec<BotRelicBlock> CODEC =
@@ -37,13 +41,23 @@ public class BotRelicBlock implements Component<ChunkStore> {
         return new BotRelicBlock(this.relicEntity, this.relicType);
     }
 
+    @Getter
     public enum RelicType {
-        EMPTY(null),
-        DEFENSIVE_BOT(SlainMecha.get().getDefensiveBotComponentType());
+        EMPTY(null, null),
+        DEFENSIVE_BOT(
+                SlainMecha.get().getDefensiveBotComponentType(),
+                (playerRef, store, blockPosition) -> {
+                    UUID playerUUID = playerRef.getWorldUuid();
+                    return new DefensiveBotComponent(playerUUID, blockPosition, false);
+                }
+                );
 
-        @Getter private final ComponentType<EntityStore, ? extends Component<EntityStore>> componentType;
-        RelicType(ComponentType<EntityStore, ? extends Component<EntityStore>> componentType) {
+        private final ComponentType<EntityStore, ? extends Component<EntityStore>> componentType;
+        private final IBotRelicComponentCreator<Component<EntityStore>> componentCreator;
+        RelicType(ComponentType<EntityStore, ? extends Component<EntityStore>> componentType, IBotRelicComponentCreator<Component<EntityStore>> componentCreator) {
             this.componentType = componentType;
+            this.componentCreator = componentCreator;
         }
+
     }
 }

@@ -3,6 +3,6 @@
   "Reference": "Template_Defensive_Bot",
   "Modify": {
     "Appearance": "Defensive_Bot",
-    "MaxHealth": 5
+    "MaxHealth": 500
   }
 }
