@@ -1,5 +1,4 @@
 {
-  "Debug": "DisplayState",
   "Type": "Abstract",
   "Parameters": {
     "Appearance": {
@@ -171,37 +170,8 @@
                         "Type": "State",
                         "State": ".Guard"
                       }
-                    },
-                    {
-                      "Weight": 10,
-                      "Action": {
-                        "Type": "State",
-                        "State": ".Hibernation"
-                      }
                     }
                   ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "Sensor": {
-            "Type": "State",
-            "State": ".Hibernation"
-          },
-          "Instructions": [
-            {
-              "Continue": true,
-              "ActionsBlocking": true,
-              "Actions": [
-                {
-                  "Type": "Timeout",
-                  "Delay": [15, 30]
-                },
-                {
-                  "Type": "State",
-                  "State": ".Default"
                 }
               ]
             }

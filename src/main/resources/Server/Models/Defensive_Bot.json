@@ -14,5 +14,42 @@
   },
   "Texture": "NPC/Intelligent/Defensive_Bot/Models/Model_Textures/Defensive_Bot.png",
   "MaxScale": 2,
-  "MinScale": 2
+  "MinScale": 2,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Intelligent/Defensive_Bot/Animations/idle.blockyanim"
+        }
+      ]
+    },
+    "Walk": {
+      "Animations": [
+        {
+          "Animation": "NPC/Intelligent/Defensive_Bot/Animations/walk.blockyanim"
+        }
+      ]
+    },
+    "Run": {
+      "Animations": [
+        {
+          "Animation": "NPC/Intelligent/Defensive_Bot/Animations/run.blockyanim"
+        }
+      ]
+    },
+    "Slash_Left": {
+      "Animations": [
+        {
+          "Animation": "NPC/Intelligent/Defensive_Bot/Animations/slash_left.blockyanim"
+        }
+      ]
+    },
+    "Slash_Right": {
+      "Animations": [
+        {
+          "Animation": "NPC/Intelligent/Defensive_Bot/Animations/slash_right.blockyanim"
+        }
+      ]
+    }
+  }
 }

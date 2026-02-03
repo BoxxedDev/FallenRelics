@@ -24,9 +24,36 @@
     "ActionsBlocking": true,
     "Actions": [
       {
-        "Type": "Attack",
-        "Attack": "Defensive_Bot_Slash_Left",
-        "AttackPauseRange": [ 0.5, 1.5 ]
+        "Type": "Sequence",
+        "Actions": [
+          {
+            "Type": "Attack",
+            "Attack": "Defensive_Bot_Slash_Left",
+            "AttackPauseRange": [ 0.5, 1.5 ]
+          },
+          {
+            "Type": "PlayAnimation",
+            "Animation": "Slash_Left",
+            "Slot": "Action",
+            "Once": true
+          }
+        ]
+      },
+      {
+        "Type": "Sequence",
+        "Actions": [
+          {
+            "Type": "Attack",
+            "Attack": "Defensive_Bot_Slash_Right",
+            "AttackPauseRange": [ 0.5, 1.5 ]
+          },
+          {
+            "Type": "PlayAnimation",
+            "Animation": "Slash_Right",
+            "Slot": "Action",
+            "Once": true
+          }
+        ]
       }
     ],
     "HeadMotion": {
