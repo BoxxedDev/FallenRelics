@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MechanicalHeartBlock implements Component<ChunkStore> {
+    public static final KeyedCodec<Integer> ITEM_KEYED_CODEC = new KeyedCodec<>("Essence", Codec.INTEGER);
     public static final BuilderCodec<MechanicalHeartBlock> CODEC =
             BuilderCodec.builder(MechanicalHeartBlock.class, MechanicalHeartBlock::new)
                     .append(

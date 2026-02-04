@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MechanicalHeartSystems {
-    public static final KeyedCodec<Integer> KEYED_CODEC = new KeyedCodec<>("Essence", Codec.INTEGER);
-
     public static class BreakBlockEventSystem extends EntityEventSystem<EntityStore, BreakBlockEvent> {
         public BreakBlockEventSystem() {
             super(BreakBlockEvent.class);
@@ -55,7 +53,7 @@ public class MechanicalHeartSystems {
             if (mechanicalHeart == null) return;
 
             ItemStack stack = new ItemStack("Mechanical_Heart", 1);
-            stack = stack.withMetadata(KEYED_CODEC, mechanicalHeart.getEssence());
+            stack = stack.withMetadata(MechanicalHeartBlock.ITEM_KEYED_CODEC, mechanicalHeart.getEssence());
 
             Holder<EntityStore> itemDrop = ItemComponent.generateItemDrop(
                     store, stack, event.getTargetBlock().toVector3d().add(0.5, 0.5, 0.5), Vector3f.ZERO, 0, 0, 0
@@ -91,7 +89,7 @@ public class MechanicalHeartSystems {
             World world = store.getExternalData().getWorld();
             Store<ChunkStore> chunkStore = world.getChunkStore().getStore();
             Vector3i target = event.getTargetBlock();
-            Integer essence = stack.getFromMetadataOrNull(KEYED_CODEC);
+            Integer essence = stack.getFromMetadataOrNull(MechanicalHeartBlock.ITEM_KEYED_CODEC);
             if (essence == null) return;
             chunkStore.getResource(SlainMecha.get().getHeartPlaceMapResourceType()).addToMap(target, essence);
         }

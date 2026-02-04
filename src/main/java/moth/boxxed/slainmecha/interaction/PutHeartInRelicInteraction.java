@@ -1,5 +1,6 @@
 package moth.boxxed.slainmecha.interaction;
 
+import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.math.util.ChunkUtil;
@@ -23,7 +24,10 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import it.unimi.dsi.fastutil.Pair;
 import moth.boxxed.slainmecha.SlainMecha;
+import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
+import moth.boxxed.slainmecha.components.entity.BaseRelicComponent;
 import moth.boxxed.slainmecha.relic.BotRelicBlock;
+import moth.boxxed.slainmecha.relic.RelicType;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -59,6 +63,9 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         if (stack == null) return;
         if (!stack.getItemId().equals("Mechanical_Heart")) return;
 
+        Integer essence = stack.getFromMetadataOrNull(MechanicalHeartBlock.ITEM_KEYED_CODEC);
+        if (essence == null) return;
+
         Inventory inventory = player.getInventory();
         ItemContainer storageContainer = inventory.getStorage();
 
@@ -84,14 +91,17 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
 
             Ref<EntityStore> ref = refPair.first();
 
-            Class<ComponentType> clazz = ComponentType.class;
-
-            if (relic.getRelicType().equals(BotRelicBlock.RelicType.EMPTY)) return;
+            if (relic.getRelicType().equals(RelicType.EMPTY)) return;
 
             cmd.getStore().putComponent(
                     ref,
-                    clazz.cast(relic.getRelicType().getComponentType()),
+                    ComponentType.class.cast(relic.getRelicType().getComponentType()),
                     relic.getRelicType().getComponentCreator().operate(playerRefComponent, entityStore, target)
+            );
+            cmd.getStore().putComponent(
+                    ref,
+                    SlainMecha.get().getBaseRelicComponentType(),
+                    new BaseRelicComponent((float) essence, stack)
             );
             world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
             storageContainer.removeItemStackFromSlot(inventory.getActiveHotbarSlot());

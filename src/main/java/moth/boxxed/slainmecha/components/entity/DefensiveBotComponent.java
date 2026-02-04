@@ -12,7 +12,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
 
-public class DefensiveBotComponent implements Component<EntityStore> {
+public class DefensiveBotComponent extends BaseRelicComponent {
     public static final BuilderCodec<DefensiveBotComponent> CODEC =
             BuilderCodec.<DefensiveBotComponent>builder(DefensiveBotComponent.class, DefensiveBotComponent::new)
                     .append(
