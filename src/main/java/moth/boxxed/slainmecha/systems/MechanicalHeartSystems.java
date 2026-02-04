@@ -92,7 +92,6 @@ public class MechanicalHeartSystems {
             Store<ChunkStore> chunkStore = world.getChunkStore().getStore();
             Vector3i target = event.getTargetBlock();
             Integer essence = stack.getFromMetadataOrNull(KEYED_CODEC);
-            world.sendMessage(Message.raw(String.valueOf(essence)));
             if (essence == null) return;
             chunkStore.getResource(SlainMecha.get().getHeartPlaceMapResourceType()).addToMap(target, essence);
         }

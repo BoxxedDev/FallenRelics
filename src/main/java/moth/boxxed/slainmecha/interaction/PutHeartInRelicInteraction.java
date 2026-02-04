@@ -8,7 +8,10 @@ import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.WaitForDataFrom;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.Inventory;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -46,10 +49,18 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
             @Nullable ItemStack stack,
             @NonNull Vector3i target,
             @NonNull CooldownHandler cooldownHandler) {
-        PlayerRef playerRef = cmd.getComponent(context.getEntity(), PlayerRef.getComponentType());
-        if (playerRef == null) return;
+        Store<EntityStore> entityStore = world.getEntityStore().getStore();
+        Ref<EntityStore> playerRef = context.getEntity();
+        PlayerRef playerRefComponent = entityStore.getComponent(playerRef, PlayerRef.getComponentType());
+        if (playerRefComponent == null) return;
+        Player player = entityStore.getComponent(playerRef, Player.getComponentType());
+        if (player == null) return;
+
         if (stack == null) return;
         if (!stack.getItemId().equals("Mechanical_Heart")) return;
+
+        Inventory inventory = player.getInventory();
+        ItemContainer storageContainer = inventory.getStorage();
 
         Store<ChunkStore> store = world.getChunkStore().getStore();
         long chunkIndex = ChunkUtil.indexChunkFromBlock(target.getX(), target.getZ());
@@ -65,14 +76,13 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
                     world.getEntityStore().getStore(),
                     relic.getRelicEntity(),
                     null,
-                    target.clone().toVector3d().add(0.5, 5.5, 0.5),
+                    target.clone().toVector3d().add(0.5, 0.5, 0.5).add(relic.getSpawnOffset()),
                     new Vector3f(0, .25f, 0)
             );
 
             if (refPair == null) return;
 
             Ref<EntityStore> ref = refPair.first();
-            //TODO: Make flexible
 
             Class<ComponentType> clazz = ComponentType.class;
 
@@ -81,9 +91,10 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
             cmd.getStore().putComponent(
                     ref,
                     clazz.cast(relic.getRelicType().getComponentType()),
-                    relic.getRelicType().getComponentCreator().operate(playerRef, world.getEntityStore().getStore(), target)
+                    relic.getRelicType().getComponentCreator().operate(playerRefComponent, entityStore, target)
             );
             world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
+            storageContainer.removeItemStackFromSlot(inventory.getActiveHotbarSlot());
         });
     }
 
