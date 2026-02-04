@@ -28,22 +28,14 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
                     )
                     .addValidator(Validators.greaterThanOrEqual(0))
                     .add()
-                    .append(
-                            new KeyedCodec<>("RemainderEssence", new ArrayCodec<>(ItemStack.CODEC, ItemStack[]::new)),
-                            (o, i) -> o.remainderEssence = new ArrayList<>(Arrays.asList(i)),
-                            (o) -> o.remainderEssence.toArray(ItemStack[]::new)
-                    )
-                    .add()
                     .build();
 
     @Getter @Setter private int essence = 0;
-    @Getter @Setter private List<ItemStack> remainderEssence = new ArrayList<>();
 
     public MechanicalHeartBlock() {}
 
-    public MechanicalHeartBlock(int essence, List<ItemStack> remainderEssence) {
+    public MechanicalHeartBlock(int essence) {
         this.essence = essence;
-        this.remainderEssence = remainderEssence;
     }
 
     public void addEssence(ItemStack stack) {
@@ -74,6 +66,6 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
 
     @Override
     public @Nullable Component<ChunkStore> clone() {
-        return new MechanicalHeartBlock(this.essence, this.remainderEssence);
+        return new MechanicalHeartBlock(this.essence);
     }
 }
