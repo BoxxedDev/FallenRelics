@@ -6,3 +6,5 @@ items.Relic_Defensive_Bot.description=A relic meant to defend an ancient civiliz
 npcRoles.DefensiveBot.name=Defensive Bot
 
 general.qualities.Relic=Relic
+
+general.notify.empty_heart=The Mechanical Heart's life essence is completely depleted
