@@ -1,21 +1,18 @@
-package moth.boxxed.slainmecha.systems;
+package moth.boxxed.fallenrelics.systems;
 
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
-import com.hypixel.hytale.component.system.RefChangeSystem;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
-import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.components.entity.BaseRelicComponent;
-import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.components.entity.BaseRelicComponent;
+import moth.boxxed.fallenrelics.components.entity.DefensiveBotComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
@@ -34,8 +31,8 @@ public class DefensiveBotSystems {
             Ref<EntityStore> ref = archetypeChunk.getReferenceTo(i);
             NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
             EntityStatMap statMap = store.getComponent(ref, EntityStatMap.getComponentType());
-            DefensiveBotComponent defensiveBot = store.getComponent(ref, SlainMecha.get().getDefensiveBotComponentType());
-            BaseRelicComponent baseRelic = store.getComponent(ref, SlainMecha.get().getBaseRelicComponentType());
+            DefensiveBotComponent defensiveBot = store.getComponent(ref, FallenRelics.get().getDefensiveBotComponentType());
+            BaseRelicComponent baseRelic = store.getComponent(ref, FallenRelics.get().getBaseRelicComponentType());
 
             if (npc == null || statMap == null || defensiveBot == null || baseRelic == null) return;
 
@@ -51,8 +48,8 @@ public class DefensiveBotSystems {
         @Override
         public @Nullable Query<EntityStore> getQuery() {
             return Query.and(
-                    SlainMecha.get().getDefensiveBotComponentType(),
-                    SlainMecha.get().getBaseRelicComponentType()
+                    FallenRelics.get().getDefensiveBotComponentType(),
+                    FallenRelics.get().getBaseRelicComponentType()
             );
         }
     }
@@ -60,12 +57,12 @@ public class DefensiveBotSystems {
     public static class RefChangeSystem extends com.hypixel.hytale.component.system.RefChangeSystem<EntityStore, DefensiveBotComponent> {
         @Override
         public @Nullable Query<EntityStore> getQuery() {
-            return SlainMecha.get().getDefensiveBotComponentType();
+            return FallenRelics.get().getDefensiveBotComponentType();
         }
 
         @Override
         public @NotNull ComponentType<EntityStore, DefensiveBotComponent> componentType() {
-            return SlainMecha.get().getDefensiveBotComponentType();
+            return FallenRelics.get().getDefensiveBotComponentType();
         }
 
         @Override

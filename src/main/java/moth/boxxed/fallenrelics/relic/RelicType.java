@@ -1,11 +1,11 @@
-package moth.boxxed.slainmecha.relic;
+package moth.boxxed.fallenrelics.relic;
 
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.Getter;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.components.entity.DefensiveBotComponent;
 
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ public enum RelicType {
     EMPTY(null, null, null),
     DEFENSIVE_BOT(
             DefensiveBotComponent.class,
-            SlainMecha.get().getDefensiveBotComponentType(),
+            FallenRelics.get().getDefensiveBotComponentType(),
             (playerRef, store, blockPosition) -> {
                 UUID playerUUID = playerRef.getWorldUuid();
                 return new DefensiveBotComponent(playerUUID, blockPosition, false);

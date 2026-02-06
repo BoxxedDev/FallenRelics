@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.components.entity;
+package moth.boxxed.fallenrelics.components.entity;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -7,10 +7,9 @@ import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import moth.boxxed.slainmecha.SlainMecha;
+import moth.boxxed.fallenrelics.FallenRelics;
 import org.jetbrains.annotations.Nullable;
 
 public class BaseRelicComponent implements Component<EntityStore> {
@@ -43,7 +42,7 @@ public class BaseRelicComponent implements Component<EntityStore> {
     }
 
     public void increaseEssence(float essence) {
-        this.essence = Math.min(SlainMecha.get().getConfig().get().getHeartMaximumEssence(), this.essence + essence);
+        this.essence = Math.min(FallenRelics.get().getConfig().get().getHeartMaximumEssence(), this.essence + essence);
     }
 
     @Override

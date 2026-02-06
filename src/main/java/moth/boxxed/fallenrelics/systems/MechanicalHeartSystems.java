@@ -1,34 +1,23 @@
-package moth.boxxed.slainmecha.systems;
+package moth.boxxed.fallenrelics.systems;
 
-import com.hypixel.hytale.codec.Codec;
-import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.util.ChunkUtil;
-import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.math.vector.Vector3i;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
 import com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
-import com.hypixel.hytale.server.core.modules.block.BlockModule;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.universe.world.chunk.BlockComponentChunk;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
-import moth.boxxed.slainmecha.resources.MechanicalHeartPlaceMap;
-import moth.boxxed.slainmecha.util.BlockUtil;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.components.block.MechanicalHeartBlock;
+import moth.boxxed.fallenrelics.resources.MechanicalHeartPlaceMap;
+import moth.boxxed.fallenrelics.util.BlockUtil;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MechanicalHeartSystems {
     public static class BreakBlockEventSystem extends EntityEventSystem<EntityStore, BreakBlockEvent> {
@@ -49,7 +38,7 @@ public class MechanicalHeartSystems {
             Ref<ChunkStore> ref = BlockUtil.getBlock(event.getTargetBlock(), chunkStore);
             if (ref == null) return;
 
-            MechanicalHeartBlock mechanicalHeart = chunkStore.getComponent(ref, SlainMecha.get().getMechanicalHeartComponentType());
+            MechanicalHeartBlock mechanicalHeart = chunkStore.getComponent(ref, FallenRelics.get().getMechanicalHeartComponentType());
             if (mechanicalHeart == null) return;
 
             ItemStack stack = new ItemStack("Mechanical_Heart", 1);
@@ -91,7 +80,7 @@ public class MechanicalHeartSystems {
             Vector3i target = event.getTargetBlock();
             Integer essence = stack.getFromMetadataOrNull(MechanicalHeartBlock.ITEM_KEYED_CODEC);
             if (essence == null) return;
-            chunkStore.getResource(SlainMecha.get().getHeartPlaceMapResourceType()).addToMap(target, essence);
+            chunkStore.getResource(FallenRelics.get().getHeartPlaceMapResourceType()).addToMap(target, essence);
         }
 
         @Override
@@ -111,11 +100,11 @@ public class MechanicalHeartSystems {
             BlockUtil.BlockLocation location = BlockUtil.getBlockLocation(ref, store);
             if (location == null) return;
 
-            MechanicalHeartPlaceMap map = store.getResource(SlainMecha.get().getHeartPlaceMapResourceType());
+            MechanicalHeartPlaceMap map = store.getResource(FallenRelics.get().getHeartPlaceMapResourceType());
             int essence = map.getMap().getOrDefault(location.getWorldPos(), 0);
 
             world.execute(() -> {
-                store.replaceComponent(ref, SlainMecha.get().getMechanicalHeartComponentType(), new MechanicalHeartBlock(essence));
+                store.replaceComponent(ref, FallenRelics.get().getMechanicalHeartComponentType(), new MechanicalHeartBlock(essence));
                 map.getMap().remove(location.getWorldPos(), essence);
             });
         }
@@ -127,7 +116,7 @@ public class MechanicalHeartSystems {
 
         @Override
         public @Nullable Query<ChunkStore> getQuery() {
-            return SlainMecha.get().getMechanicalHeartComponentType();
+            return FallenRelics.get().getMechanicalHeartComponentType();
         }
     }
 }

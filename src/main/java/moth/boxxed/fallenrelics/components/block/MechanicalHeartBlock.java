@@ -1,22 +1,17 @@
-package moth.boxxed.slainmecha.components.block;
+package moth.boxxed.fallenrelics.components.block;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import lombok.Getter;
 import lombok.Setter;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.SlainMechaConfig;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.FallenRelicsConfig;
 import org.jspecify.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MechanicalHeartBlock implements Component<ChunkStore> {
     public static final KeyedCodec<Integer> ITEM_KEYED_CODEC = new KeyedCodec<>("Essence", Codec.INTEGER);
@@ -42,7 +37,7 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
     public void addEssence(ItemStack stack) {
         if (!(stack.getItemId().equals("Ingredient_Life_Essence") || stack.getItemId().equals("Ingredient_Life_Essence_Concentrated"))) return;
 
-        SlainMechaConfig config = SlainMecha.get().getConfig().get();
+        FallenRelicsConfig config = FallenRelics.get().getConfig().get();
 
         boolean isConcentratedEssence = stack.getItemId().equals("Ingredient_Life_Essence_Concentrated");
         int mult = isConcentratedEssence ? 100 : 1;

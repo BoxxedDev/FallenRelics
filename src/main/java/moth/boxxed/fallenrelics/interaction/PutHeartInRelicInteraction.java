@@ -1,6 +1,5 @@
-package moth.boxxed.slainmecha.interaction;
+package moth.boxxed.fallenrelics.interaction;
 
-import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.math.util.ChunkUtil;
@@ -23,11 +22,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import it.unimi.dsi.fastutil.Pair;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
-import moth.boxxed.slainmecha.components.entity.BaseRelicComponent;
-import moth.boxxed.slainmecha.relic.BotRelicBlock;
-import moth.boxxed.slainmecha.relic.RelicType;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.components.block.MechanicalHeartBlock;
+import moth.boxxed.fallenrelics.components.entity.BaseRelicComponent;
+import moth.boxxed.fallenrelics.relic.BotRelicBlock;
+import moth.boxxed.fallenrelics.relic.RelicType;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -75,7 +74,7 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         if (blockComponentChunk == null) return;
         int blockIndex = ChunkUtil.indexBlockInColumn(target.getX(), target.getY(), target.getZ());
 
-        BotRelicBlock relic = blockComponentChunk.getComponent(blockIndex, SlainMecha.get().getBotRelicBlockComponentType());
+        BotRelicBlock relic = blockComponentChunk.getComponent(blockIndex, FallenRelics.get().getBotRelicBlockComponentType());
         if (relic == null) return;
 
         world.execute(() -> {
@@ -100,7 +99,7 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
             );
             cmd.getStore().putComponent(
                     ref,
-                    SlainMecha.get().getBaseRelicComponentType(),
+                    FallenRelics.get().getBaseRelicComponentType(),
                     new BaseRelicComponent((float) essence, stack)
             );
             world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");

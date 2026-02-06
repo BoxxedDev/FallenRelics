@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.util;
+package moth.boxxed.fallenrelics.util;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;

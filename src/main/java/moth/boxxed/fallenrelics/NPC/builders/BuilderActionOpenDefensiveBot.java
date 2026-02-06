@@ -1,10 +1,10 @@
-package moth.boxxed.slainmecha.NPC.builders;
+package moth.boxxed.fallenrelics.NPC.builders;
 
 import com.hypixel.hytale.server.npc.asset.builder.BuilderDescriptorState;
 import com.hypixel.hytale.server.npc.asset.builder.BuilderSupport;
 import com.hypixel.hytale.server.npc.corecomponents.builders.BuilderActionBase;
 import com.hypixel.hytale.server.npc.instructions.Action;
-import moth.boxxed.slainmecha.NPC.actions.ActionOpenDefensiveBot;
+import moth.boxxed.fallenrelics.NPC.actions.ActionOpenDefensiveBot;
 import org.jspecify.annotations.Nullable;
 
 public class BuilderActionOpenDefensiveBot extends BuilderActionBase {

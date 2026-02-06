@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.relic;
+package moth.boxxed.fallenrelics.relic;
 
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.Store;

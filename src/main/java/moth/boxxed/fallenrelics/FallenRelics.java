@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha;
+package moth.boxxed.fallenrelics;
 
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.ResourceType;
@@ -11,21 +11,21 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 import com.hypixel.hytale.server.npc.NPCPlugin;
 import lombok.Getter;
-import moth.boxxed.slainmecha.NPC.builders.BuilderActionOpenDefensiveBot;
-import moth.boxxed.slainmecha.components.entity.BaseRelicComponent;
-import moth.boxxed.slainmecha.relic.BotRelicBlock;
-import moth.boxxed.slainmecha.components.block.MechanicalHeartBlock;
-import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
-import moth.boxxed.slainmecha.interaction.PutEssenceInHeartInteraction;
-import moth.boxxed.slainmecha.interaction.PutHeartInRelicInteraction;
-import moth.boxxed.slainmecha.resources.MechanicalHeartPlaceMap;
-import moth.boxxed.slainmecha.systems.DefensiveBotSystems;
-import moth.boxxed.slainmecha.systems.MechanicalHeartSystems;
+import moth.boxxed.fallenrelics.NPC.builders.BuilderActionOpenDefensiveBot;
+import moth.boxxed.fallenrelics.components.entity.BaseRelicComponent;
+import moth.boxxed.fallenrelics.relic.BotRelicBlock;
+import moth.boxxed.fallenrelics.components.block.MechanicalHeartBlock;
+import moth.boxxed.fallenrelics.components.entity.DefensiveBotComponent;
+import moth.boxxed.fallenrelics.interaction.PutEssenceInHeartInteraction;
+import moth.boxxed.fallenrelics.interaction.PutHeartInRelicInteraction;
+import moth.boxxed.fallenrelics.resources.MechanicalHeartPlaceMap;
+import moth.boxxed.fallenrelics.systems.DefensiveBotSystems;
+import moth.boxxed.fallenrelics.systems.MechanicalHeartSystems;
 
-public class SlainMecha extends JavaPlugin {
-    private static SlainMecha instance;
+public class FallenRelics extends JavaPlugin {
+    private static FallenRelics instance;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    @Getter private final Config<SlainMechaConfig> config = this.withConfig("SlainMechaConfig", SlainMechaConfig.CODEC);
+    @Getter private final Config<FallenRelicsConfig> config = this.withConfig("SlainMechaConfig", FallenRelicsConfig.CODEC);
 
     @Getter private final ComponentType<EntityStore, BaseRelicComponent> baseRelicComponentType;
     @Getter private final ComponentType<EntityStore, DefensiveBotComponent> defensiveBotComponentType;
@@ -35,11 +35,11 @@ public class SlainMecha extends JavaPlugin {
 
     @Getter private final ResourceType<ChunkStore, MechanicalHeartPlaceMap> heartPlaceMapResourceType;
 
-    public static SlainMecha get() {
+    public static FallenRelics get() {
         return instance;
     }
 
-    public SlainMecha(JavaPluginInit init) {
+    public FallenRelics(JavaPluginInit init) {
         super(init);
         instance = this;
         
