@@ -19,7 +19,8 @@
     "Gathering": {
       "Breaking": {
         "GatherType": "Rocks",
-        "ItemId": "Mechanical_Heart"
+        "ItemId": "Mechanical_Heart",
+        "Quantity": 0
       }
     },
     "BlockParticleSetId": "Stone",
@@ -52,7 +53,10 @@
         "Texture": "Blocks/Mechanical_Heart/mechanical_heart.png"
       }
     ],
-    "CustomModelAnimation": "Blocks/Mechanical_Heart/heartbeat.blockyanim"
+    "CustomModelAnimation": "Blocks/Mechanical_Heart/heartbeat.blockyanim",
+    "Effect": [
+      "Water"
+    ]
   },
   "ResourceTypes": [
     {

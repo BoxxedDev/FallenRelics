@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.components.entity;
+package moth.boxxed.fallenrelics.components.entity;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -12,7 +12,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
 
-public class DefensiveBotComponent implements Component<EntityStore> {
+public class DefensiveBotComponent extends BaseRelicComponent {
     public static final BuilderCodec<DefensiveBotComponent> CODEC =
             BuilderCodec.<DefensiveBotComponent>builder(DefensiveBotComponent.class, DefensiveBotComponent::new)
                     .append(

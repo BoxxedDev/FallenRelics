@@ -8,8 +8,5 @@
   "TextColor": "#40A759",
   "LocalizationKey": "server.general.qualities.Relic",
   "VisibleQualityLabel": true,
-  "RenderSpecialSlot": true,
-  "ItemEntityConfig": {
-    "ParticleSystemId": "Drop_Epic"
-  }
+  "RenderSpecialSlot": true
 }

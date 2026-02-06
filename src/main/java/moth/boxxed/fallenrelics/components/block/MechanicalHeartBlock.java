@@ -1,24 +1,20 @@
-package moth.boxxed.slainmecha.components.block;
+package moth.boxxed.fallenrelics.components.block;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import lombok.Getter;
 import lombok.Setter;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.SlainMechaConfig;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.FallenRelicsConfig;
 import org.jspecify.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class MechanicalHeartBlock implements Component<ChunkStore> {
+    public static final KeyedCodec<Integer> ITEM_KEYED_CODEC = new KeyedCodec<>("Essence", Codec.INTEGER);
     public static final BuilderCodec<MechanicalHeartBlock> CODEC =
             BuilderCodec.builder(MechanicalHeartBlock.class, MechanicalHeartBlock::new)
                     .append(
@@ -28,28 +24,20 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
                     )
                     .addValidator(Validators.greaterThanOrEqual(0))
                     .add()
-                    .append(
-                            new KeyedCodec<>("RemainderEssence", new ArrayCodec<>(ItemStack.CODEC, ItemStack[]::new)),
-                            (o, i) -> o.remainderEssence = new ArrayList<>(Arrays.asList(i)),
-                            (o) -> o.remainderEssence.toArray(ItemStack[]::new)
-                    )
-                    .add()
                     .build();
 
     @Getter @Setter private int essence = 0;
-    @Getter @Setter private List<ItemStack> remainderEssence = new ArrayList<>();
 
     public MechanicalHeartBlock() {}
 
-    public MechanicalHeartBlock(int essence, List<ItemStack> remainderEssence) {
+    public MechanicalHeartBlock(int essence) {
         this.essence = essence;
-        this.remainderEssence = remainderEssence;
     }
 
     public void addEssence(ItemStack stack) {
         if (!(stack.getItemId().equals("Ingredient_Life_Essence") || stack.getItemId().equals("Ingredient_Life_Essence_Concentrated"))) return;
 
-        SlainMechaConfig config = SlainMecha.get().getConfig().get();
+        FallenRelicsConfig config = FallenRelics.get().getConfig().get();
 
         boolean isConcentratedEssence = stack.getItemId().equals("Ingredient_Life_Essence_Concentrated");
         int mult = isConcentratedEssence ? 100 : 1;
@@ -74,6 +62,6 @@ public class MechanicalHeartBlock implements Component<ChunkStore> {
 
     @Override
     public @Nullable Component<ChunkStore> clone() {
-        return new MechanicalHeartBlock(this.essence, this.remainderEssence);
+        return new MechanicalHeartBlock(this.essence);
     }
 }

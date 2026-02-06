@@ -48,7 +48,12 @@
       "Components": {
         "BotRelic": {
           "RelicEntity": "Defensive_Bot",
-          "RelicType": "DefensiveBot"
+          "RelicType": "DefensiveBot",
+          "SpawnOffset": {
+            "X": 0,
+            "Z": 0,
+            "Y": -0.2
+          }
         }
       }
     },

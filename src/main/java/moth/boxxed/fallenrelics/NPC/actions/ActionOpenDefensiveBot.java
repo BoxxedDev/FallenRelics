@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.NPC.actions;
+package moth.boxxed.fallenrelics.NPC.actions;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -11,8 +11,8 @@ import com.hypixel.hytale.server.npc.corecomponents.ActionBase;
 import com.hypixel.hytale.server.npc.corecomponents.builders.BuilderActionBase;
 import com.hypixel.hytale.server.npc.role.Role;
 import com.hypixel.hytale.server.npc.sensorinfo.InfoProvider;
-import moth.boxxed.slainmecha.SlainMecha;
-import moth.boxxed.slainmecha.components.entity.DefensiveBotComponent;
+import moth.boxxed.fallenrelics.FallenRelics;
+import moth.boxxed.fallenrelics.components.entity.DefensiveBotComponent;
 import org.jspecify.annotations.NonNull;
 
 public class ActionOpenDefensiveBot extends ActionBase {
@@ -41,7 +41,7 @@ public class ActionOpenDefensiveBot extends ActionBase {
 
         player.sendMessage(Message.raw("AWAWAWA"));
 
-        DefensiveBotComponent defensiveBot = store.getComponent(ref, SlainMecha.get().getDefensiveBotComponentType());
+        DefensiveBotComponent defensiveBot = store.getComponent(ref, FallenRelics.get().getDefensiveBotComponentType());
         if (defensiveBot == null) return false;
 
         player.sendMessage(Message.raw(String.valueOf(defensiveBot.getOwnerUUID())));

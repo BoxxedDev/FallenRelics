@@ -1,4 +1,4 @@
-package moth.boxxed.slainmecha.resources;
+package moth.boxxed.fallenrelics.resources;
 
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -6,16 +6,10 @@ import com.hypixel.hytale.codec.codecs.map.Object2IntMapCodec;
 import com.hypixel.hytale.component.Resource;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import it.unimi.dsi.fastutil.ints.IntCollection;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectSet;
 import lombok.Getter;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MechanicalHeartPlaceMap implements Resource<ChunkStore> {
     public static final BuilderCodec<MechanicalHeartPlaceMap> CODEC =
