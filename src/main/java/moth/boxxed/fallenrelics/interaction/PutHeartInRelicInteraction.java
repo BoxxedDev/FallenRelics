@@ -7,6 +7,7 @@ import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.WaitForDataFrom;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.Inventory;
@@ -63,7 +64,10 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         if (!stack.getItemId().equals("Mechanical_Heart")) return;
 
         Integer essence = stack.getFromMetadataOrNull(MechanicalHeartBlock.ITEM_KEYED_CODEC);
-        if (essence == null) return;
+        if (essence == null || essence == 0) {
+            player.sendMessage(Message.translation("server.general.notify.empty_heart"));
+            return;
+        }
 
         Inventory inventory = player.getInventory();
         ItemContainer storageContainer = inventory.getStorage();
