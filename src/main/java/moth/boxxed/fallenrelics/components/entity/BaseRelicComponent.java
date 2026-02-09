@@ -12,9 +12,16 @@ import lombok.Setter;
 import moth.boxxed.fallenrelics.FallenRelics;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public class BaseRelicComponent implements Component<EntityStore> {
     public static final BuilderCodec<BaseRelicComponent> CODEC =
             BuilderCodec.<BaseRelicComponent>builder(BaseRelicComponent.class, BaseRelicComponent::new)
+                    .append(
+                            new KeyedCodec<>("OwnerUuid", Codec.UUID_STRING),
+                            (o, i) -> o.ownerUUID = i,
+                            (o) -> o.ownerUUID
+                    ).add()
                     .append(
                             new KeyedCodec<>("Essence", Codec.FLOAT),
                             (o, i) -> o.essence = i,
@@ -27,12 +34,14 @@ public class BaseRelicComponent implements Component<EntityStore> {
                     ).add()
                     .build();
 
+    @Setter @Getter private UUID ownerUUID;
     @Getter @Setter private ItemStack heart = ItemStack.EMPTY;
     @Getter @Setter private float essence = 0;
 
     public BaseRelicComponent() {}
 
-    public BaseRelicComponent(float essence, ItemStack heart) {
+    public BaseRelicComponent(UUID ownerUUID, float essence, ItemStack heart) {
+        this.ownerUUID = ownerUUID;
         this.essence = essence;
         this.heart = heart;
     }
@@ -47,6 +56,6 @@ public class BaseRelicComponent implements Component<EntityStore> {
 
     @Override
     public @Nullable Component<EntityStore> clone() {
-        return new BaseRelicComponent(this.essence, this.heart);
+        return new BaseRelicComponent(this.ownerUUID, this.essence, this.heart);
     }
 }

@@ -1,4 +1,4 @@
-package moth.boxxed.fallenrelics.relic;
+package moth.boxxed.fallenrelics.components.block.relic;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;

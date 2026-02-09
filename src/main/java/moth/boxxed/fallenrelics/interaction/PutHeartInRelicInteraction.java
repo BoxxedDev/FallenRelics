@@ -26,12 +26,13 @@ import it.unimi.dsi.fastutil.Pair;
 import moth.boxxed.fallenrelics.FallenRelics;
 import moth.boxxed.fallenrelics.components.block.MechanicalHeartBlock;
 import moth.boxxed.fallenrelics.components.entity.BaseRelicComponent;
-import moth.boxxed.fallenrelics.relic.BotRelicBlock;
-import moth.boxxed.fallenrelics.relic.RelicType;
+import moth.boxxed.fallenrelics.components.block.relic.BotRelicBlock;
+import moth.boxxed.fallenrelics.components.block.relic.RelicType;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 
 public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
     @Nonnull
@@ -65,7 +66,7 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
 
         Integer essence = stack.getFromMetadataOrNull(MechanicalHeartBlock.ITEM_KEYED_CODEC);
         if (essence == null || essence == 0) {
-            player.sendMessage(Message.translation("server.general.notify.empty_heart"));
+            player.sendMessage(Message.translation("server.general.notify.empty_heart").color(new Color(255, 101, 101,220)).italic(true));
             return;
         }
 
@@ -82,29 +83,29 @@ public class PutHeartInRelicInteraction extends SimpleBlockInteraction {
         if (relic == null) return;
 
         world.execute(() -> {
+            if (relic.getRelicType().equals(RelicType.EMPTY)) return;
+
             Pair<Ref<EntityStore>, INonPlayerCharacter> refPair = NPCPlugin.get().spawnNPC(
                     world.getEntityStore().getStore(),
                     relic.getRelicEntity(),
                     null,
                     target.clone().toVector3d().add(0.5, 0.5, 0.5).add(relic.getSpawnOffset()),
-                    new Vector3f(0, .25f, 0)
+                    new Vector3f(0, 0, 0)
             );
 
             if (refPair == null) return;
 
             Ref<EntityStore> ref = refPair.first();
 
-            if (relic.getRelicType().equals(RelicType.EMPTY)) return;
-
             cmd.getStore().putComponent(
                     ref,
                     ComponentType.class.cast(relic.getRelicType().getComponentType()),
-                    relic.getRelicType().getComponentCreator().operate(playerRefComponent, entityStore, target)
+                    relic.getRelicType().getComponentCreator().operate(playerRef, ref, entityStore, target)
             );
             cmd.getStore().putComponent(
                     ref,
                     FallenRelics.get().getBaseRelicComponentType(),
-                    new BaseRelicComponent((float) essence, stack)
+                    new BaseRelicComponent(playerRefComponent.getUuid(), (float) essence, stack)
             );
             world.setBlock(target.getX(), target.getY(), target.getZ(), "Empty");
             storageContainer.removeItemStackFromSlot(inventory.getActiveHotbarSlot());

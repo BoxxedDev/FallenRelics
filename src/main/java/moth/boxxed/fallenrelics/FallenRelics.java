@@ -13,7 +13,8 @@ import com.hypixel.hytale.server.npc.NPCPlugin;
 import lombok.Getter;
 import moth.boxxed.fallenrelics.NPC.builders.BuilderActionOpenDefensiveBot;
 import moth.boxxed.fallenrelics.components.entity.BaseRelicComponent;
-import moth.boxxed.fallenrelics.relic.BotRelicBlock;
+import moth.boxxed.fallenrelics.components.entity.SorterBotComponent;
+import moth.boxxed.fallenrelics.components.block.relic.BotRelicBlock;
 import moth.boxxed.fallenrelics.components.block.MechanicalHeartBlock;
 import moth.boxxed.fallenrelics.components.entity.DefensiveBotComponent;
 import moth.boxxed.fallenrelics.interaction.PutEssenceInHeartInteraction;
@@ -29,6 +30,7 @@ public class FallenRelics extends JavaPlugin {
 
     @Getter private final ComponentType<EntityStore, BaseRelicComponent> baseRelicComponentType;
     @Getter private final ComponentType<EntityStore, DefensiveBotComponent> defensiveBotComponentType;
+    @Getter private final ComponentType<EntityStore, SorterBotComponent> sorterBotComponentType;
 
     @Getter private final ComponentType<ChunkStore, MechanicalHeartBlock> mechanicalHeartComponentType;
     @Getter private final ComponentType<ChunkStore, BotRelicBlock> botRelicBlockComponentType;
@@ -45,6 +47,7 @@ public class FallenRelics extends JavaPlugin {
         
         this.baseRelicComponentType = this.getEntityStoreRegistry().registerComponent(BaseRelicComponent.class, "BaseRelic", BaseRelicComponent.CODEC);
         this.defensiveBotComponentType = this.getEntityStoreRegistry().registerComponent(DefensiveBotComponent.class, "DefensiveBot", DefensiveBotComponent.CODEC);
+        this.sorterBotComponentType = this.getEntityStoreRegistry().registerComponent(SorterBotComponent.class, "SorterBot", SorterBotComponent.CODEC);
 
         this.mechanicalHeartComponentType = this.getChunkStoreRegistry().registerComponent(MechanicalHeartBlock.class, "MechanicalHeart", MechanicalHeartBlock.CODEC);
         this.botRelicBlockComponentType = this.getChunkStoreRegistry().registerComponent(BotRelicBlock.class, "BotRelic", BotRelicBlock.CODEC);

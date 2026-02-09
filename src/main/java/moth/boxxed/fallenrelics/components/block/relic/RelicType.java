@@ -1,4 +1,4 @@
-package moth.boxxed.fallenrelics.relic;
+package moth.boxxed.fallenrelics.components.block.relic;
 
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
@@ -6,20 +6,22 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import lombok.Getter;
 import moth.boxxed.fallenrelics.FallenRelics;
 import moth.boxxed.fallenrelics.components.entity.DefensiveBotComponent;
-
-import java.util.UUID;
+import moth.boxxed.fallenrelics.components.entity.SorterBotComponent;
 
 @Getter
 public enum RelicType {
     EMPTY(null, null, null),
-    DEFENSIVE_BOT(
+    DEFENSIVE(
             DefensiveBotComponent.class,
             FallenRelics.get().getDefensiveBotComponentType(),
-            (playerRef, store, blockPosition) -> {
-                UUID playerUUID = playerRef.getWorldUuid();
-                return new DefensiveBotComponent(playerUUID, blockPosition, false);
-            }
-    );
+            (playerRef, entityRef, store, blockPosition) -> new DefensiveBotComponent(blockPosition, false)
+    ),
+    SORTER(
+            SorterBotComponent.class,
+            FallenRelics.get().getSorterBotComponentType(),
+            (playerRef, entityRef, store, blockPosition) -> new SorterBotComponent()
+    )
+    ;
 
     private final Class<? extends Component<EntityStore>> clazz;
     private final ComponentType<EntityStore, ? extends Component<EntityStore>> componentType;

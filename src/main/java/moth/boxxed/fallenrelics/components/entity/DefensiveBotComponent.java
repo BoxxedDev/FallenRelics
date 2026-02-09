@@ -16,11 +16,6 @@ public class DefensiveBotComponent extends BaseRelicComponent {
     public static final BuilderCodec<DefensiveBotComponent> CODEC =
             BuilderCodec.<DefensiveBotComponent>builder(DefensiveBotComponent.class, DefensiveBotComponent::new)
                     .append(
-                            new KeyedCodec<>("OwnerUuid", Codec.UUID_STRING),
-                            (o, i) -> o.ownerUUID = i,
-                            (o) -> o.ownerUUID
-                    ).add()
-                    .append(
                             new KeyedCodec<>("GuardingPosition", Vector3i.CODEC),
                             (o, i) -> o.guardingPosition = i,
                             (o) -> o.guardingPosition
@@ -32,20 +27,18 @@ public class DefensiveBotComponent extends BaseRelicComponent {
                     ).add()
             .build();
 
-    @Setter @Getter private UUID ownerUUID;
     @Setter @Getter private Vector3i guardingPosition = new Vector3i();
     @Setter @Getter private boolean shouldFollow = false;
 
     public DefensiveBotComponent() {}
 
-    public DefensiveBotComponent(UUID ownerUUID, Vector3i guardingPosition, boolean shouldFollow) {
-        this.ownerUUID = ownerUUID;
+    public DefensiveBotComponent(Vector3i guardingPosition, boolean shouldFollow) {
         this.guardingPosition = guardingPosition;
         this.shouldFollow = shouldFollow;
     }
 
     @Override
     public @Nullable Component<EntityStore> clone() {
-        return new DefensiveBotComponent(this.ownerUUID, this.guardingPosition, this.shouldFollow);
+        return new DefensiveBotComponent(this.guardingPosition, this.shouldFollow);
     }
 }
